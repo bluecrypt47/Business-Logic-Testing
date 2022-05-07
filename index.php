@@ -1,4 +1,5 @@
-<?php require 'handle.php'; ?>
+<?php require 'handle.php';
+session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,14 +35,20 @@
         }
     </style>
 </head>
-<?php
-$sql = "SELECT * FROM cart";
-$result = mysqli_query($conn, $sql);
-$products = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-?>
 
 <body>
+    <?php if (isset($_SESSION['username'])) {
+        $username = $_SESSION['username'];
+
+        $sql = "SELECT * FROM accounts WHERE username = '$username'";
+
+        $result = mysqli_query($conn, $sql);
+        $account = mysqli_fetch_assoc($result);
+    } ?>
+
+    <h1>Welcome <?php echo $account['name'] ?>!!! - Balance: $ <?php echo $account['balance'] ?></h1>
+
+
     <!-- Upload -->
     <form action="index.php" class="form" method="POST" enctype="multipart/form-data">
         <h2 class="form-heading">Upload File</h2>
@@ -53,32 +60,15 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <?php require 'handle.php'; ?>
     </form>
 
-    <!-- <table>
-        <thead>
-            <th>No.</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th>Update</th>
-        </thead>
-        <tbody>
-            <?php $i = 1;
-            foreach ($products as $product) : ?>
-                <tr>
-                    <td><?php echo $i++; ?></td>
-                    <td><?php echo $product['name']; ?></td>
-                    <td><?php echo '$' . $product['price']; ?></td>
-                    <td><input type="number" value="<?php echo $product['quantity']; ?>"></td>
-                    <?php $total = $product['quantity'] * $product['price']; ?>
-                    <td><?php echo  '$' . $total; ?></td>
-                    <td>
-                        <a class="btn btn-primary" href="index.php?idUpdate=<?php echo $product['id'] ?>">Update</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table> -->
+    <!-- Transfer Money -->
+    <div style="margin-left: 300px;">
+        <form action="index.php" method="POST">
+            <h2>Transfer Money</h2>
+            <label>Receiver: <input type="text" name="receiver" value="Chương"></label> <br>
+            <label>Amount: <input type="number" name="money" value="0"></label><br>
+            <input class="btn btn-lg btn-primary btn-block" type="submit" name="send" value="Send" style="width: 100px;">
+        </form>
+    </div>
 </body>
 
 </html>
