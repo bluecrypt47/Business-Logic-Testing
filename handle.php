@@ -18,8 +18,8 @@ if (isset($_POST['upload'])) {
     $size = $_FILES['file']['size'];
 
 
-    if (!in_array($extension, ['pdf', 'png', 'jpg', 'jpeg'])) {
-        echo "File tail must be pdf, png, jpg, jpeg or gif";
+    if (!in_array($extension, ['png', 'jpg', 'jpeg'])) {
+        echo "File tail must be png, jpg or jpeg ";
     } else {
         if (move_uploaded_file($file, $destination)) {
             $sql = "INSERT INTO upload (name, size) VALUES ('$name',  $size)";
