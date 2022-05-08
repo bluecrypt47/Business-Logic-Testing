@@ -1,5 +1,5 @@
-<?php require 'handle.php';
-session_start(); ?>
+<?php session_start() ?>
+<?php require 'handle.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,9 +45,8 @@ session_start(); ?>
         $result = mysqli_query($conn, $sql);
         $account = mysqli_fetch_assoc($result);
     } ?>
-
-    <h1>Welcome <?php echo $account['name'] ?>!!! - Balance: $ <?php echo $account['balance'] ?></h1>
-
+    <a href="logout.php" class="btn btn-lg btn-primary btn-block">Logout</a>
+    <h1 align="center">Welcome <?php echo $account['name'] ?>!!! - Balance: $ <?php echo $account['balance'] ?></h1>
 
     <!-- Upload -->
     <form action="index.php" class="form" method="POST" enctype="multipart/form-data">
@@ -61,11 +60,11 @@ session_start(); ?>
     </form>
 
     <!-- Transfer Money -->
-    <div style="margin-left: 300px;">
+    <div align="center">
         <form action="index.php" method="POST">
             <h2>Transfer Money</h2>
-            <label>Receiver: <input type="text" name="receiver" value="Chương"></label> <br>
-            <label>Amount: <input type="number" name="money" value="0"></label><br>
+            <label>Receiver: <input type="text" name="receiver" placeholder="Chương"></label> <br>
+            <label>Amount: <input type="number" name="money" placeholder="0"></label><br>
             <input class="btn btn-lg btn-primary btn-block" type="submit" name="send" value="Send" style="width: 100px;">
         </form>
     </div>

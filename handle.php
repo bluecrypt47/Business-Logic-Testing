@@ -1,9 +1,11 @@
 <?php
+if (!isset($_SESSION)) {
+    session_start();
+}
 header('Content-Type: text/html; charset=utf-8');
 // Kết nối cơ sở dữ liệu
 $conn = mysqli_connect('localhost', 'root', '', 'bldv') or die('Connection fail!');
 mysqli_set_charset($conn, "utf8");
-
 
 // Login
 if (isset($_POST['login'])) {
@@ -34,7 +36,6 @@ if (isset($_POST['login'])) {
         die();
     }
     $_SESSION['username'] = $username;
-    echo "Xin chào " . $username;
     die();
 }
 
@@ -73,27 +74,34 @@ if (isset($_POST['upload'])) {
 if (isset($_POST['send'])) {
     $name = trim($_POST['receiver']);
     $num = $_POST['money'];
+    $username = $_SESSION['username'];
 
     $sql = "SELECT * FROM accounts WHERE name = '$name' ";
+    $sql2 = "SELECT * FROM accounts WHERE username = '$username' ";
+
     $result = mysqli_query($conn, $sql);
 
-    $account = mysqli_fetch_assoc($result);
+
+    $result2 = mysqli_query($conn, $sql2);
+
 
     if (mysqli_num_rows($result) > 0) {
+        $account = mysqli_fetch_assoc($result);
+        $balance =  $account['balance'];
+        $total = $balance + $num;
 
-        $total = $account['balance'] + $num;
+        $account2 = mysqli_fetch_assoc($result2);
+        $balance2 =  $account2['balance'];
+        $total2 = $balance2 - $num;
 
-        $update1 = "UPDATE `accounts` SET `balance`='$total' WHERE name='$name'";
-        $use = $_SESSION['username'];
-        $sql1 = "SELECT * FROM accounts WHERE username = '$use' ";
-        $result1 = mysqli_query($conn, $sql1);
+        $update = "UPDATE `accounts` SET `balance`= '$total' WHERE name='$name'";
+        $update2 = "UPDATE `accounts` SET `balance`= '$total2' WHERE username='$username'";
 
-        $account1 = mysqli_fetch_assoc($result1);
-        $total1 = $account1['balance'] - $num;
-
-        echo '<script> window.location="index.php";</script>';
+        mysqli_query($conn, $update);
+        mysqli_query($conn, $update2);
+        echo '<script>alert("Transfer money Successfully!"); window.location="index.php";</script>';
     } else {
-        echo '<script language="javascript">alert("Email has existed!"); window.location="login.php";</script>';
+        echo '<script language="javascript">alert("Name has existed!"); window.location="index.php";</script>';
         die();
     }
 }

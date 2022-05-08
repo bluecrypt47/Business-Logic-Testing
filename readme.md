@@ -6,6 +6,8 @@ Mục lục:
 - [Test Business Logic Data Validation](#test-business-logic-data-validation)
 - [Ví dụ](#ví-dụ)
   - [Ví dụ 1](#ví-dụ-1)
+  - [Ví dụ 2](#ví-dụ-2)
+  - [Ví dụ 3](#ví-dụ-3)
 
 ## Test Business Logic Data Validation
 - Ứng dụng phải đảm bảo rằng chỉ dữ liệu hợp lệ về mặt logic mới có thể được nhập ở giao diện người dùng cũng như trực tiếp đến phía máy chủ của một ứng dụng hệ thống. Việc chỉ xác minh dữ liệu cục bộ có thể khiến các ứng dụng dễ bị tấn công bởi máy chủ thông qua proxy hoặc tương tác với các hệ thống khác.
@@ -18,3 +20,15 @@ Mục lục:
 
 -Bây giờ, tôi sử dụng `Burp Suite` để có thể lấy được phần header và sửa lại phần `context-type` và kết quả như hình dưới.
 ![Hình 2.](~/../img/2.png)
+
+### Ví dụ 2
+- Ví dụ này sẽ là ví dụ về việc chuyển tiền. Bình thường, người gửi sẽ gửi số tiền cho người khác bằng cách nhập số tài khoản ngân hàng và gửi. Để đơn giản hơn tôi sẽ cho người dùng nhập tên người nhận và số tiền như hình bên dưới.
+![Hình 3.](~/../img/3.png)
+
+- Sẽ như thế nào? Nếu tôi thay vì không truyền vào số nguyên dương và thay vào đó sẽ là số nguyên âm (hình bên dưới).
+![Hình 4.](~/../img/4.png)
+
+### Ví dụ 3
+
+
+
