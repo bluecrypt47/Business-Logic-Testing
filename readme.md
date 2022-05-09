@@ -10,8 +10,9 @@ Mục lục:
   - [Ví dụ 3](#ví-dụ-3)
 
 ## Test Business Logic Data Validation
-- Ứng dụng phải đảm bảo rằng chỉ dữ liệu hợp lệ về mặt logic mới có thể được nhập ở giao diện người dùng cũng như trực tiếp đến phía máy chủ của một ứng dụng hệ thống. Việc chỉ xác minh dữ liệu cục bộ có thể khiến các ứng dụng dễ bị tấn công bởi máy chủ thông qua proxy hoặc tương tác với các hệ thống khác.
-- Việc kiểm tra các lỗi logic nghiệp vụ trong một ứng dụng web động đa chức năng đòi hỏi phải suy nghĩ theo các phương pháp độc đáo. Nếu cơ chế xác thực của ứng dụng được phát triển với mục đích thực hiện các bước 1, 2, 3 theo thứ tự cụ thể đó để xác thực người dùng. Điều gì xảy ra nếu người dùng chuyển thẳng từ bước 1 sang bước 3?
+- Business Logic xảy ra khi một ứng dụng (trang web, ứng dụng dành cho thiết bị di động, dịch vụ web…) không hoạt động như mong đợi.
+- Nó xảy ra khi một số bước logic hoặc một quy trình làm việc có thể bị kẻ tấn công tránh, phá vỡ hoặc thao túng. Kẻ tấn công chuyển hướng quy trình làm việc vì lợi ích riêng của nó, bản thân nó không phải là một sai lầm kỹ thuật.
+- Các lỗi logic nghiệp vụ thường có thể được khai thác mà không có các công cụ kỹ thuật cụ thể, đôi khi chỉ đơn giản bằng cách thao tác với url hoặc mã htlm của trang.
 
 ## Ví dụ
 ### Ví dụ 1
@@ -29,6 +30,11 @@ Mục lục:
 ![Hình 4.](~/../img/4.png)
 
 ### Ví dụ 3
+- Ví dụ này sẽ là thanh toán 1 đơn hàng. 
+- Giả sử bạn mua 1 món hàng với giá `$1337.00` như hình bên dưới. 
+![Hình 5.](~/../img/5.png)
 
+- Tôi sử dụng `Burp Suite` để lấy `request` này sau đó dùng chức năng `Repeater` để thay đổi số tiền thanh toán thành `$1.00` và kết quả (hình dưới). Tôi có thể mua 1 món hàng với giá trên $1000.00 chỉ với $1 trong tay.
+![Hình 6.](~/../img/6.png)
 
 

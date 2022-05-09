@@ -45,29 +45,36 @@
         $result = mysqli_query($conn, $sql);
         $account = mysqli_fetch_assoc($result);
     } ?>
-    <a href="logout.php" class="btn btn-lg btn-primary btn-block">Logout</a>
-    <h1 align="center">Welcome <?php echo $account['name'] ?>!!! - Balance: $ <?php echo $account['balance'] ?></h1>
 
-    <!-- Upload -->
-    <form action="index.php" class="form" method="POST" enctype="multipart/form-data">
-        <h2 class="form-heading">Upload File</h2>
-        <div class="form-group">
-            <label for="InputFile">File input</label>
-            <input type="file" name="file" id="InputFile">
-        </div>
-        <input class="btn btn-lg btn-primary btn-block" type="submit" name="upload" value="Upload" style="width: 100px;" />
-        <?php require 'handle.php'; ?>
-    </form>
+    <?php if (isset($account['id'])) {
+        echo '<h1 align="center">Welcome ' . $account['name'] . '!!! - Balance: $' . number_format($account['balance'], 0, ",", ".")  . '</h1>';
+        echo '<a href="logout.php" class="btn" >Logout</a> <br \>'; ?>
 
-    <!-- Transfer Money -->
-    <div align="center">
-        <form action="index.php" method="POST">
-            <h2>Transfer Money</h2>
-            <label>Receiver: <input type="text" name="receiver" placeholder="Chương"></label> <br>
-            <label>Amount: <input type="number" name="money" placeholder="0"></label><br>
-            <input class="btn btn-lg btn-primary btn-block" type="submit" name="send" value="Send" style="width: 100px;">
+        <!-- Upload -->
+        <form action="index.php" class="form" method="POST" enctype="multipart/form-data">
+            <h2 class="form-heading">Upload File</h2>
+            <div class="form-group">
+                <label for="InputFile">File input</label>
+                <input type="file" name="file" id="InputFile">
+            </div>
+            <input class="btn btn-lg btn-primary btn-block" type="submit" name="upload" value="Upload" style="width: 100px;" />
+            <?php require 'handle.php'; ?>
         </form>
-    </div>
+
+        <!-- Transfer Money -->
+        <div align="center">
+            <form action="index.php" method="POST">
+                <h2>Transfer Money</h2>
+                <label>Receiver: <input type="text" name="receiver" placeholder="Chương"></label> <br>
+                <label>Amount: <input type="number" name="money" placeholder="0"></label><br>
+                <input class="btn btn-lg btn-primary btn-block" type="submit" name="send" value="Send" style="width: 100px;">
+            </form>
+        </div>
+    <?php } else {
+        echo '<script> window.location="login.php";</script>';
+    }
+    ?>
+
 </body>
 
 </html>

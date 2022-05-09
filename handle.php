@@ -100,6 +100,7 @@ if (isset($_POST['send'])) {
         mysqli_query($conn, $update);
         mysqli_query($conn, $update2);
         echo '<script>alert("Transfer money Successfully!"); window.location="index.php";</script>';
+        die();
     } else {
         echo '<script language="javascript">alert("Name has existed!"); window.location="index.php";</script>';
         die();
